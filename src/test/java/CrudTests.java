@@ -17,7 +17,6 @@ public class CrudTests extends BaseTest {
                      when().
                              post(BaseConfig.ALL_USERS).
                              jsonPath().getString("data.id");
-        System.out.println("userIdBase: " + userIdBase);
     }
 
     @Test
@@ -42,11 +41,6 @@ public class CrudTests extends BaseTest {
         ResponseModel responseModel = response.as(ResponseModel.class);
 
         assertTrue(responseModel.getCode().equals(BaseConfig.CODE_OK));
-        System.out.println("baseUser.getEmail() " + baseUser.getEmail());
-        System.out.println("baseUser.getName() " + baseUser.getName());
-        System.out.println("baseUser.getGender() " + baseUser.getGender());
-        System.out.println("baseUser.getStatus() " + baseUser.getStatus());
-
         assertTrue(responseModel.getUserResponse().getEmail().equals(baseUser.getEmail()));
         assertTrue(responseModel.getUserResponse().getName().equals(baseUser.getName()));
         assertTrue(responseModel.getUserResponse().getGender().equals(baseUser.getGender()));
@@ -109,13 +103,12 @@ public class CrudTests extends BaseTest {
 
         assertTrue(responseModel.getCode().equals(BaseConfig.CODE_DELETED));
 
-         response = given().
+                    given().
                            pathParam(BaseConfig.PATH_PARAMETER, userIdBase).
                     when().
                            delete(BaseConfig.SINGLE_USER).
                     then().
-                           body(codeKey,equalTo(Integer.valueOf(BaseConfig.CODE_NOT_FOUND))).
-                    extract().response();
+                           body(codeKey,equalTo(Integer.valueOf(BaseConfig.CODE_NOT_FOUND)));
     }
 
 }
